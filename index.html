@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Yoga Center - Connect with Your Guru</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>Serenity Yoga</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="chat">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat with Guru</span>
+                </button>
+                <button class="nav-btn" data-section="personal">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Personal Area</span>
+                </button>
+                <button class="nav-btn" data-section="blog">
+                    <i class="fas fa-book-open"></i>
+                    <span>Explore Blog</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Chat Section -->
+        <section id="chat" class="section active">
+            <div class="container">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="guru-info">
+                            <div class="guru-avatar">
+                                <i class="fas fa-om"></i>
+                            </div>
+                            <div class="guru-details">
+                                <h3>Master Ananda</h3>
+                                <span class="status online">
+                                    <i class="fas fa-circle"></i>
+                                    Online
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message guru-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-om"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Welcome to our sacred space. I'm here to guide you on your yoga journey. How can I support your practice today?</p>
+                                <span class="message-time">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <div class="input-container">
+                            <input type="text" id="messageInput" placeholder="Type your message to your guru...">
+                            <button id="sendBtn" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Area Section -->
+        <section id="personal" class="section">
+            <div class="container">
+                <div class="personal-area">
+                    <h2>Your Personal Space</h2>
+                    <div class="personal-grid">
+                        <div class="personal-card">
+                            <div class="card-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>Class Schedule</h3>
+                            <p>View and book your upcoming yoga sessions</p>
+                            <button class="card-btn">View Schedule</button>
+                        </div>
+                        
+                        <div class="personal-card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Progress Tracker</h3>
+                            <p>Monitor your yoga journey and achievements</p>
+                            <button class="card-btn">View Progress</button>
+                        </div>
+                        
+                        <div class="personal-card">
+                            <div class="card-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>Wellness Goals</h3>
+                            <p>Set and track your personal wellness objectives</p>
+                            <button class="card-btn">Manage Goals</button>
+                        </div>
+                        
+                        <div class="personal-card">
+                            <div class="card-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <h3>Meditation Library</h3>
+                            <p>Access guided meditations and soundscapes</p>
+                            <button class="card-btn">Explore Library</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <div class="container">
+                <div class="blog-area">
+                    <h2>Wisdom & Insights</h2>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <div class="blog-image">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="blog-content">
+                                <h3>Morning Sun Salutation: Starting Your Day Right</h3>
+                                <p>Discover the transformative power of beginning each day with intention and movement...</p>
+                                <div class="blog-meta">
+                                    <span class="author">By Master Ananda</span>
+                                    <span class="date">2 days ago</span>
+                                </div>
+                                <button class="read-more">Read More</button>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-image">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="blog-content">
+                                <h3>Breathwork for Inner Peace</h3>
+                                <p>Learn ancient breathing techniques that calm the mind and energize the body...</p>
+                                <div class="blog-meta">
+                                    <span class="author">By Sarah Chen</span>
+                                    <span class="date">5 days ago</span>
+                                </div>
+                                <button class="read-more">Read More</button>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-image">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div class="blog-content">
+                                <h3>Finding Balance in Challenging Poses</h3>
+                                <p>Explore the mental and physical aspects of advanced asanas and how to approach them...</p>
+                                <div class="blog-meta">
+                                    <span class="author">By Master Ananda</span>
+                                    <span class="date">1 week ago</span>
+                                </div>
+                                <button class="read-more">Read More</button>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-image">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <div class="blog-content">
+                                <h3>Evening Yoga for Better Sleep</h3>
+                                <p>Wind down from your day with gentle poses and practices that prepare you for rest...</p>
+                                <div class="blog-meta">
+                                    <span class="author">By Luna Rodriguez</span>
+                                    <span class="date">1 week ago</span>
+                                </div>
+                                <button class="read-more">Read More</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
