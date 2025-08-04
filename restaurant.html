@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bella Vista - Fine Dining Restaurant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .restaurant-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .restaurant-name {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .restaurant-tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .restaurant-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .nav-tab.active {
+            color: #2c3e50;
+            background: white;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #2c3e50;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .menu-section {
+            margin-bottom: 40px;
+        }
+
+        .menu-section-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .menu-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .menu-item-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            flex: 1;
+        }
+
+        .menu-item-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-left: 10px;
+        }
+
+        .menu-item-description {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .menu-item-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tag.vegetarian {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .tag.vegan {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .tag.gluten-free {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .tag.spicy {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .tag.chef-special {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .about-content {
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .reservation-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .reservation-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px dotted #ddd;
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .day {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .time {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .restaurant-name {
+                font-size: 2.5rem;
+            }
+
+            .restaurant-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="restaurant-card">
+            <header class="header">
+                <div class="header-content">
+                    <h1 class="restaurant-name">Bella Vista</h1>
+                    <p class="restaurant-tagline">Exquisite Italian Cuisine & Wine</p>
+                    <div class="restaurant-info">
+                        <div class="info-item">
+                            <span>📍</span>
+                            <span>123 Gourmet Street, Culinary District</span>
+                        </div>
+                        <div class="info-item">
+                            <span>📞</span>
+                            <span>(555) 123-FOOD</span>
+                        </div>
+                        <div class="info-item">
+                            <span>⭐</span>
+                            <span>4.8/5 Rating</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <nav class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('menu')">Menu</button>
+                <button class="nav-tab" onclick="showTab('about')">About</button>
+                <button class="nav-tab" onclick="showTab('contact')">Contact</button>
+            </nav>
+
+            <div id="menu" class="tab-content active">
+                <section class="menu-section">
+                    <h2 class="menu-section-title">Appetizers</h2>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Bruschetta Trio</span>
+                                <span class="menu-item-price">$14</span>
+                            </div>
+                            <p class="menu-item-description">Traditional tomato basil, wild mushroom, and ricotta with honey on artisan bread</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Antipasto Classico</span>
+                                <span class="menu-item-price">$18</span>
+                            </div>
+                            <p class="menu-item-description">Prosciutto di Parma, fresh mozzarella, roasted peppers, olives, and artichokes</p>
+                            <div class="menu-item-tags">
+                                <span class="tag gluten-free">Gluten-Free</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Calamari Fritti</span>
+                                <span class="menu-item-price">$16</span>
+                            </div>
+                            <p class="menu-item-description">Crispy fried squid with spicy marinara and lemon aioli</p>
+                            <div class="menu-item-tags">
+                                <span class="tag spicy">Spicy</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Burrata Caprese</span>
+                                <span class="menu-item-price">$17</span>
+                            </div>
+                            <p class="menu-item-description">Creamy burrata with heirloom tomatoes, fresh basil, and aged balsamic</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                                <span class="tag chef-special">Chef's Special</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2 class="menu-section-title">Pasta & Risotto</h2>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Spaghetti Carbonara</span>
+                                <span class="menu-item-price">$22</span>
+                            </div>
+                            <p class="menu-item-description">Classic Roman pasta with pancetta, eggs, pecorino romano, and black pepper</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Lobster Ravioli</span>
+                                <span class="menu-item-price">$28</span>
+                            </div>
+                            <p class="menu-item-description">House-made ravioli filled with Maine lobster in a light tomato cream sauce</p>
+                            <div class="menu-item-tags">
+                                <span class="tag chef-special">Chef's Special</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Mushroom Risotto</span>
+                                <span class="menu-item-price">$24</span>
+                            </div>
+                            <p class="menu-item-description">Creamy arborio rice with wild mushrooms, truffle oil, and parmesan</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                                <span class="tag gluten-free">Gluten-Free</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Linguine alle Vongole</span>
+                                <span class="menu-item-price">$26</span>
+                            </div>
+                            <p class="menu-item-description">Fresh linguine with littleneck clams in white wine garlic sauce</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2 class="menu-section-title">Main Courses</h2>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Osso Buco</span>
+                                <span class="menu-item-price">$34</span>
+                            </div>
+                            <p class="menu-item-description">Braised veal shanks with saffron risotto and gremolata</p>
+                            <div class="menu-item-tags">
+                                <span class="tag chef-special">Chef's Special</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Branzino al Sale</span>
+                                <span class="menu-item-price">$30</span>
+                            </div>
+                            <p class="menu-item-description">Mediterranean sea bass baked in sea salt crust with lemon herb oil</p>
+                            <div class="menu-item-tags">
+                                <span class="tag gluten-free">Gluten-Free</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Chicken Parmigiana</span>
+                                <span class="menu-item-price">$26</span>
+                            </div>
+                            <p class="menu-item-description">Breaded chicken breast with marinara, mozzarella, and spaghetti</p>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Eggplant Parmigiana</span>
+                                <span class="menu-item-price">$22</span>
+                            </div>
+                            <p class="menu-item-description">Layers of breaded eggplant with marinara, mozzarella, and fresh basil</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="menu-section">
+                    <h2 class="menu-section-title">Desserts</h2>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Tiramisu</span>
+                                <span class="menu-item-price">$12</span>
+                            </div>
+                            <p class="menu-item-description">Classic Italian dessert with mascarpone, espresso, and cocoa</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Panna Cotta</span>
+                                <span class="menu-item-price">$10</span>
+                            </div>
+                            <p class="menu-item-description">Vanilla bean custard with seasonal berry compote</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                                <span class="tag gluten-free">Gluten-Free</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Gelato Trio</span>
+                                <span class="menu-item-price">$9</span>
+                            </div>
+                            <p class="menu-item-description">Three scoops of house-made gelato: pistachio, stracciatella, and limoncello</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <span class="menu-item-name">Cannoli Siciliani</span>
+                                <span class="menu-item-price">$11</span>
+                            </div>
+                            <p class="menu-item-description">Crispy shells filled with sweet ricotta, chocolate chips, and pistachios</p>
+                            <div class="menu-item-tags">
+                                <span class="tag vegetarian">Vegetarian</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="about" class="tab-content">
+                <div class="about-content">
+                    <p class="about-text">
+                        Welcome to Bella Vista, where passion for authentic Italian cuisine meets modern culinary artistry. 
+                        Established in 1985 by the Rossi family, we have been serving the finest Italian dishes crafted 
+                        from traditional recipes passed down through generations. Our commitment to using only the freshest 
+                        ingredients, imported Italian specialties, and time-honored cooking techniques ensures every meal 
+                        is an unforgettable experience.
+                    </p>
+                    
+                    <div class="features-grid">
+                        <div class="feature">
+                            <div class="feature-icon">👨‍🍳</div>
+                            <h3 class="feature-title">Expert Chefs</h3>
+                            <p class="feature-description">Our culinary team trained in Italy brings authentic flavors and innovative techniques to every dish.</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🌿</div>
+                            <h3 class="feature-title">Fresh Ingredients</h3>
+                            <p class="feature-description">We source the finest local and imported ingredients daily to ensure peak freshness and quality.</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🍷</div>
+                            <h3 class="feature-title">Wine Selection</h3>
+                            <p class="feature-description">Curated collection of Italian wines perfectly paired with our dishes by our sommelier.</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🏛️</div>
+                            <h3 class="feature-title">Elegant Atmosphere</h3>
+                            <p class="feature-description">Warm, inviting ambiance perfect for romantic dinners, business meetings, or family gatherings.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contact" class="tab-content">
+                <div class="contact-grid">
+                    <div class="contact-section">
+                        <h3 class="contact-title">
+                            <span>📍</span>
+                            Location
+                        </h3>
+                        <div class="contact-info">
+                            <p><strong>Address:</strong><br>
+                            123 Gourmet Street<br>
+                            Culinary District, CD 12345</p>
+                            
+                            <p><strong>Parking:</strong> Valet available<br>
+                            <strong>Public Transit:</strong> Metro Line 2, Gourmet Station</p>
+                            
+                            <button class="reservation-btn" onclick="openReservationModal()">
+                                Make a Reservation
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="contact-section">
+                        <h3 class="contact-title">
+                            <span>📞</span>
+                            Contact Info
+                        </h3>
+                        <div class="contact-info">
+                            <p><strong>Phone:</strong> (555) 123-FOOD</p>
+                            <p><strong>Email:</strong> info@bellavista.com</p>
+                            <p><strong>Website:</strong> www.bellavista.com</p>
+                            <p><strong>Social Media:</strong><br>
+                            @BellaVistaRestaurant</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-section">
+                        <h3 class="contact-title">
+                            <span>🕐</span>
+                            Hours
+                        </h3>
+                        <div class="contact-info">
+                            <ul class="hours-list">
+                                <li><span class="day">Monday</span> <span class="time">Closed</span></li>
+                                <li><span class="day">Tuesday</span> <span class="time">5:00 PM - 10:00 PM</span></li>
+                                <li><span class="day">Wednesday</span> <span class="time">5:00 PM - 10:00 PM</span></li>
+                                <li><span class="day">Thursday</span> <span class="time">5:00 PM - 10:00 PM</span></li>
+                                <li><span class="day">Friday</span> <span class="time">5:00 PM - 11:00 PM</span></li>
+                                <li><span class="day">Saturday</span> <span class="time">4:00 PM - 11:00 PM</span></li>
+                                <li><span class="day">Sunday</span> <span class="time">4:00 PM - 9:00 PM</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="contact-section">
+                        <h3 class="contact-title">
+                            <span>🎉</span>
+                            Special Events
+                        </h3>
+                        <div class="contact-info">
+                            <p><strong>Private Dining:</strong> Available for groups of 20+</p>
+                            <p><strong>Wine Dinners:</strong> Monthly sommelier events</p>
+                            <p><strong>Cooking Classes:</strong> Weekend workshops</p>
+                            <p><strong>Holiday Menus:</strong> Special seasonal offerings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeReservationModal()">&times;</button>
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">Make a Reservation</h2>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time:</label>
+                    <select id="time" name="time" required>
+                        <option value="">Select time</option>
+                        <option value="17:00">5:00 PM</option>
+                        <option value="17:30">5:30 PM</option>
+                        <option value="18:00">6:00 PM</option>
+                        <option value="18:30">6:30 PM</option>
+                        <option value="19:00">7:00 PM</option>
+                        <option value="19:30">7:30 PM</option>
+                        <option value="20:00">8:00 PM</option>
+                        <option value="20:30">8:30 PM</option>
+                        <option value="21:00">9:00 PM</option>
+                        <option value="21:30">9:30 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests:</label>
+                    <select id="guests" name="guests" required>
+                        <option value="">Select guests</option>
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5 Guests</option>
+                        <option value="6">6 Guests</option>
+                        <option value="7">7 Guests</option>
+                        <option value="8">8 Guests</option>
+                        <option value="9+">9+ Guests</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="requests">Special Requests:</label>
+                    <textarea id="requests" name="requests" rows="3" placeholder="Dietary restrictions, special occasions, etc."></textarea>
+                </div>
+                <button type="submit" class="reservation-btn" style="width: 100%; margin-top: 10px;">
+                    Confirm Reservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+        }
+
+        function openReservationModal() {
+            document.getElementById('reservationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeReservationModal() {
+            document.getElementById('reservationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('reservationModal');
+            if (event.target === modal) {
+                closeReservationModal();
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const reservation = {};
+            for (let [key, value] of formData.entries()) {
+                reservation[key] = value;
+            }
+            
+            // Simulate successful reservation
+            alert(`Thank you, ${reservation.name}! Your reservation for ${reservation.guests} guests on ${reservation.date} at ${reservation.time} has been confirmed. We'll send a confirmation email to ${reservation.email}.`);
+            
+            // Reset form and close modal
+            this.reset();
+            closeReservationModal();
+        });
+
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+        });
+
+        // Add hover effects to menu items
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Smooth scrolling for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.scrollBehavior = 'smooth';
+        });
+    </script>
+</body>
+</html>
